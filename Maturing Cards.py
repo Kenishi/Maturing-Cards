@@ -4,7 +4,8 @@ Filename: Maturing Cards.py
 Version: 0.2
 Author: Kenishi
 Desc:	Generates a new graph that shows the number of cards that are maturing in a time frame
-		Support at http://forum.koohii.com/viewtopic.php?id=9495
+		
+		Report bugs to https://github.com/Kenishi/Maturing-Cards
 """
 
 import anki
