@@ -1,7 +1,7 @@
 ﻿"""
 Name: Maturing Cards
 Filename: Maturing Cards.py
-Version: 0.2
+Version: 0.3
 Author: Kenishi
 Desc:	Generates a new graph that shows the number of cards that are maturing in a time frame
 		
@@ -9,6 +9,7 @@ Desc:	Generates a new graph that shows the number of cards that are maturing in 
 """
 
 import anki
+import anki.stats
 from anki.hooks import wrap, addHook
 
 ###Constants###
