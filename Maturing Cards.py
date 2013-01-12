@@ -84,14 +84,14 @@ def _maturedCards(self, num=7, chunk=1):
 SELECT
 (CAST((id/1000 - :cut) / 86400.0 as int))/:chunk as day,
 COUNT(*) as count
-FROM revlog %s and ivl > 21 and lastIvl <= 21
+FROM revlog %s and ivl >= 21 and lastIvl < 21
 GROUP BY day ORDER by day""" % lim, cut=self.col.sched.dayCutoff, tf=tf, chunk=chunk)
 	else:
 		return self.col.db.all("""
 SELECT
 (CAST((id/1000 - :cut) / 86400.0 as int))/:chunk as day,
 COUNT(*) as count
-FROM revlog %s WHERE ivl > 21 and lastIvl <= 21
+FROM revlog %s WHERE ivl >= 21 and lastIvl < 21
 GROUP BY day ORDER by day""" % lim, cut=self.col.sched.dayCutoff, tf=tf, chunk=chunk)
 
 anki.stats.CollectionStats.cardGraph = wrap(anki.stats.CollectionStats.cardGraph, maturingGraph, pos="")	
