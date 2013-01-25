@@ -12,24 +12,8 @@ import anki
 import anki.stats
 from anki.hooks import wrap, addHook
 
-###Constants###
-DEBUG = False
-debugOut = None
-
 # Graph Bar Color
 reviewMatureC = "#72a5d9"
-
-def log(str):
-	##USAGE: Debug logging, make sure a <deck name>.media folder exists in deck's root directory for log to be created
-	##RETURNS: Nothing
-	global debugOut
-	
-	if DEBUG:
-		if not debugOut:
-			debugOut = open("""D:\mr_debug.txt""", mode="a")
-		debugOut.write(repr(str))
-		debugOut.close()
-
 
 def maturingGraph(*args, **kwargs):
 	self = args[0]
@@ -84,14 +68,14 @@ def _maturedCards(self, num=7, chunk=1):
 SELECT
 (CAST((id/1000 - :cut) / 86400.0 as int))/:chunk as day,
 COUNT(*) as count
-FROM revlog %s and ivl >= 21 and lastIvl < 21
+FROM revlog %s and (ivl >= 21 and lastIvl < 21)
 GROUP BY day ORDER by day""" % lim, cut=self.col.sched.dayCutoff, tf=tf, chunk=chunk)
 	else:
 		return self.col.db.all("""
 SELECT
 (CAST((id/1000 - :cut) / 86400.0 as int))/:chunk as day,
 COUNT(*) as count
-FROM revlog %s WHERE ivl >= 21 and lastIvl < 21
+FROM revlog %s WHERE (ivl >= 21 and lastIvl < 21)
 GROUP BY day ORDER by day""" % lim, cut=self.col.sched.dayCutoff, tf=tf, chunk=chunk)
 
 anki.stats.CollectionStats.cardGraph = wrap(anki.stats.CollectionStats.cardGraph, maturingGraph, pos="")	
